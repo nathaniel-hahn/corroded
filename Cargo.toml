@@ -1,0 +1,9 @@
+[package]
+name = "corroded"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+metal = "0.30"
+winit = "0.30" # For windowing and handling input
+image = "0.24" # For image I/O
