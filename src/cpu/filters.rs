@@ -1,7 +1,7 @@
 /*
  * Nathaniel Hahn
  * corroded
- *
+ * has testing functionality for associated kernels
  */
 use crate::cpu::kernels;
 
