@@ -5,43 +5,33 @@
  *
  */
 
-
+// itty bitty update for git testing
 
 use corroded::cpu::filters;
 use corroded::utils::image_io;
 
 fn main() {
-    let image = vec![
-        10, 10, 10, 10, 10,
-        10, 50, 50, 50, 10,
-        10, 50, 100, 50, 10,
-        10, 50, 50, 50, 10,
-        10, 10, 10, 10, 10,
-    ];
-    let width = 5;
-    let height = 5;
+    
+    let image_path = "tests/tester.jpg";
+    // this should be a match conditional with debug info
+    let gray_image = image_io::load_image(image_path).expect("Failed to load image"); 
+                                                                
+    
+    let width = gray_image.width();
+    let height = gray_image.height();
 
-    // Define the kernel
-    let kernel = [
-        -1.0, -1.0, -1.0,
-        -1.0,  8.0, -1.0,
-        -1.0, -1.0, -1.0,
-    ];
-
-    // Apply convolution
-    let result = filters::apply_convolution(&image, width, height, &kernel, 3);
-
-
-    let edge_result = filters::apply_predefined_kernel(&image, width, height, "edge_detection");
-    let blur_result = filters::apply_predefined_kernel(&image, width, height, "gaussian_blur");
-    let sharpen_result = filters::apply_predefined_kernel(&image, width, height, "sharpen");
-    let emboss_result = filters::apply_predefined_kernel(&image, width, height, "emboss");
+    let edge_result = filters::apply_predefined_kernel(&gray_image, width.try_into().unwrap(), height.try_into().unwrap(), "edge_detection");
+    let blur_result = filters::apply_predefined_kernel(&gray_image, width.try_into().unwrap(), height.try_into().unwrap(), "gaussian_blur");
+    let sharpen_result = filters::apply_predefined_kernel(&gray_image, width.try_into().unwrap(), height.try_into().unwrap(), "sharpen");
+    let emboss_result = filters::apply_predefined_kernel(&gray_image, width.try_into().unwrap(), height.try_into().unwrap(), "emboss");
 
 
     // Print the resulting image
-    println!("Result: {:?}", result);
+  /*
     println!("Edge detection result: {:?}", edge_result);
     println!("Gaussian blur result: {:?}", blur_result);
     println!("Sharpen result: {:?}", sharpen_result);
     println!("Emboss result: {:?}", emboss_result);
+  */
+    image_io::create_image_from_vector(edge_result, width, height, "edgeout.png");
 }
